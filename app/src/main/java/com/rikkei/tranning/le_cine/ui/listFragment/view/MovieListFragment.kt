@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.rikkei.tranning.le_cine.App
 import com.rikkei.tranning.le_cine.model.Movie
 import com.rikkei.tranning.le_cine.R
@@ -40,6 +42,15 @@ class MovieListFragment : Fragment(), MoviesListView {
         movies_list.setHasFixedSize(true)
         movies_list.layoutManager = GridLayoutManager(context, 2)
         movies_list.adapter = MovieListAdapter(this)
+
+        movies_list.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+
+                if (!recyclerView.canScrollVertically(1))
+                    presenter.nextPage()
+            }
+        })
     }
 
     override fun showMovies(movies: List<Movie>?) {
@@ -47,7 +58,7 @@ class MovieListFragment : Fragment(), MoviesListView {
     }
 
     override fun loadingStarted() {
-        Snackbar.make(movies_list, "Loading Movies", Snackbar.LENGTH_SHORT).show()
+        Toast.makeText(context, "Loading Movies", Toast.LENGTH_SHORT).show()
     }
 
     override fun loadingFailed(errorMessage: String) {

@@ -23,6 +23,8 @@ class MoviesListPresenterImpl(val iterator: MoviesListIterator) :
     }
 
     override fun nextPage() {
+        currentPage++
+        displayMovies()
     }
 
     override fun setView(view: MoviesListView) {
