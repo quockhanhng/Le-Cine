@@ -1,6 +1,8 @@
-package com.rikkei.tranning.le_cine.ui.listFragment
+package com.rikkei.tranning.le_cine.ui.listFragment.presenter
 
 import com.rikkei.tranning.le_cine.model.Movie
+import com.rikkei.tranning.le_cine.ui.listFragment.iterator.MoviesListIterator
+import com.rikkei.tranning.le_cine.ui.listFragment.view.MoviesListView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers

@@ -1,5 +1,6 @@
 package com.rikkei.tranning.le_cine.di.module
 
+import com.google.gson.Gson
 import com.rikkei.tranning.le_cine.BuildConfig
 import com.rikkei.tranning.le_cine.network.ApiKeyInterceptor
 import com.rikkei.tranning.le_cine.api.TmdbWebService
@@ -11,7 +12,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-import retrofit2.converter.moshi.MoshiConverterFactory
+import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
@@ -26,7 +27,7 @@ class NetworkModule {
 
         return Retrofit.Builder()
             .baseUrl(TMDB_BASE_URL)
-            .addConverterFactory(MoshiConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(Gson()))
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .client(okHttpClient)
             .build()

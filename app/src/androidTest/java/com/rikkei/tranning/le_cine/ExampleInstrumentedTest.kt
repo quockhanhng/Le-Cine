@@ -1,4 +1,4 @@
-package com.rikkei.tranning.listFragment
+package com.rikkei.tranning.le_cine
 
 import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4

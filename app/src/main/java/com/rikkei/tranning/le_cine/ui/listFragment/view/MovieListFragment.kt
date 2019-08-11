@@ -1,14 +1,17 @@
-package com.rikkei.tranning.le_cine.ui.listFragment
+package com.rikkei.tranning.le_cine.ui.listFragment.view
 
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
+import android.support.v7.widget.GridLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.rikkei.tranning.le_cine.App
 import com.rikkei.tranning.le_cine.model.Movie
 import com.rikkei.tranning.le_cine.R
+import com.rikkei.tranning.le_cine.ui.listFragment.adapter.MovieListAdapter
+import com.rikkei.tranning.le_cine.ui.listFragment.presenter.MoviesListPresenter
 import kotlinx.android.synthetic.main.fragment_movie_list.*
 import javax.inject.Inject
 
@@ -20,7 +23,7 @@ class MovieListFragment : Fragment(), MoviesListView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        (context?.applicationContext as App).createListComponent().inject(this)
+        (activity!!.application as App).createListComponent().inject(this)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
@@ -34,11 +37,13 @@ class MovieListFragment : Fragment(), MoviesListView {
     }
 
     private fun initLayout() {
-
+        movies_list.setHasFixedSize(true)
+        movies_list.layoutManager = GridLayoutManager(context, 2)
+        movies_list.adapter = MovieListAdapter(this)
     }
 
     override fun showMovies(movies: List<Movie>?) {
-
+        (movies_list.adapter as MovieListAdapter).addMovies(movies)
     }
 
     override fun loadingStarted() {

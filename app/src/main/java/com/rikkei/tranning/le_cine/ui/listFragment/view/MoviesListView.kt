@@ -1,4 +1,4 @@
-package com.rikkei.tranning.le_cine.ui.listFragment
+package com.rikkei.tranning.le_cine.ui.listFragment.view
 
 import com.rikkei.tranning.le_cine.model.Movie
 

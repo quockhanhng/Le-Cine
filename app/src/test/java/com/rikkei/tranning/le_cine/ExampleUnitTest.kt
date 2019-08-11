@@ -1,4 +1,4 @@
-package com.rikkei.tranning.listFragment
+package com.rikkei.tranning.le_cine
 
 import org.junit.Test
 
