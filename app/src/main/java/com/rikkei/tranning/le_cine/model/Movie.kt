@@ -50,4 +50,8 @@ data class Movie(
     fun getPosterUrl(): String {
         return "http://image.tmdb.org/t/p/w342$posterPath"
     }
+
+    fun getBackDropPath(): String {
+        return "http://image.tmdb.org/t/p/w780$backdropPath"
+    }
 }

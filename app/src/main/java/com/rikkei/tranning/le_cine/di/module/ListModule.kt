@@ -12,6 +12,7 @@ import dagger.Provides
 @Module
 class ListModule {
     @Provides
+    @ListingScope
     fun provideMoviesListPresenter(moviesListIterator: MoviesListIterator): MoviesListPresenter {
         return MoviesListPresenterImpl(moviesListIterator)
     }

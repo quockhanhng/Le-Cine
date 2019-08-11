@@ -1,5 +1,6 @@
 package com.rikkei.tranning.le_cine.ui.listFragment.view
 
+import android.content.Context
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
@@ -21,6 +22,14 @@ class MovieListFragment : Fragment(), MoviesListView {
 
     @Inject
     lateinit var presenter: MoviesListPresenter
+
+    private var callback: Callback? = null
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+
+        callback = context as Callback
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,5 +75,22 @@ class MovieListFragment : Fragment(), MoviesListView {
     }
 
     override fun onMovieClicked(movie: Movie) {
+        callback?.onMovieClicked(movie)
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+
+        callback = null
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        (activity!!.application as App).releaseListComponent()
+    }
+
+    interface Callback {
+        fun onMovieClicked(movie: Movie)
     }
 }
