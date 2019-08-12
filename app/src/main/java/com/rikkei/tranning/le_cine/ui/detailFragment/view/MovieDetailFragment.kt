@@ -1,6 +1,8 @@
 package com.rikkei.tranning.le_cine.ui.detailFragment.view
 
 import android.annotation.SuppressLint
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
@@ -88,7 +90,7 @@ class MovieDetailFragment : Fragment(), MovieDetailView, View.OnClickListener {
         movie_name.text = movie.title
         movie_year.text = "Release Date: ${movie.releaseDate}"
         movie_rating.text = "${movie.voteAverage} / 10"
-        trailers_label.text = movie.overview
+        movie_description.text = movie.overview
         presenter.showTrailers(movie)
         presenter.showReviews(movie)
     }
@@ -110,14 +112,16 @@ class MovieDetailFragment : Fragment(), MovieDetailView, View.OnClickListener {
             for (trailer in trailers) {
                 val thumbContainer = inflater.inflate(R.layout.video, this.trailers, false)
                 val thumbView = thumbContainer.findViewById<ImageView>(R.id.video_thumb)
+                val titleView = thumbContainer.findViewById<TextView>(R.id.video_title)
                 thumbView.setTag(R.id.trailer_tag, Video.getUrl(trailer))
                 thumbView.requestLayout()
                 thumbView.setOnClickListener(this)
                 Picasso.get()
                     .load(Video.getThumbnailUrl(trailer))
-                    .resize(150, 150)
+                    .resize(160, 130)
                     .centerCrop()
                     .into(thumbView)
+                titleView.text = trailer.name
                 this.trailers.addView(thumbContainer)
             }
         }
@@ -146,7 +150,26 @@ class MovieDetailFragment : Fragment(), MovieDetailView, View.OnClickListener {
     }
 
     override fun onClick(v: View?) {
+        when (v?.id) {
+            R.id.video_thumb -> {
+                onThumbnailClicked(v)
+            }
+            R.id.review_content -> {
+                onReviewClicked(v as TextView)
+            }
+        }
+    }
 
+    private fun onThumbnailClicked(v: View) {
+        val videoUrl = v.getTag(R.id.trailer_tag) as String
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(videoUrl))
+        startActivity(intent)
+    }
+
+    private fun onReviewClicked(view: TextView) {
+        if (view.maxLines == 5)
+            view.maxLines = 500
+        else view.maxLines = 5
     }
 
     override fun onDestroy() {

@@ -37,7 +37,7 @@ data class Video(
 
     companion object CREATOR : Parcelable.Creator<Video> {
 
-        const val SITE_YOUTUBE = "YouTube"
+        private const val SITE_YOUTUBE = "YouTube"
         private const val YOUTUBE_VIDEO_URL = "http://www.youtube.com/watch?v=%1\$s"
         private const val YOUTUBE_THUMBNAIL_URL = "http://img.youtube.com/vi/%1\$s/0.jpg"
 

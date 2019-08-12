@@ -89,7 +89,7 @@
                     android:layout_marginTop="32dp"
                     android:text="Summary"
                     android:textAppearance="@style/TextAppearance.AppCompat.Title"
-                    android:textColor="@android:color/darker_gray"/>
+                    android:textColor="@android:color/black"/>
 
             <TextView
                     android:id="@+id/movie_description"
