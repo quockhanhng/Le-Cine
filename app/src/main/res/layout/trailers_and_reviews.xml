@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
     <TextView
             android:id="@+id/trailers_label"
@@ -11,13 +12,13 @@
             android:text="Trailers"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
             android:textColor="@android:color/black"
-            android:visibility="gone"/>
+    />
 
     <HorizontalScrollView
             android:id="@+id/trailers_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone">
+    >
 
         <LinearLayout
                 android:id="@+id/trailers"
@@ -35,7 +36,7 @@
             android:text="Reviews"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
             android:textColor="@android:color/black"
-            android:visibility="gone"/>
+    />
 
     <LinearLayout
             android:id="@+id/reviews_container"
@@ -43,5 +44,5 @@
             android:layout_height="wrap_content"
             android:clipChildren="false"
             android:orientation="vertical"
-            android:visibility="gone"/>
+    />
 </LinearLayout>

@@ -129,9 +129,11 @@ class MovieDetailFragment : Fragment(), MovieDetailView, View.OnClickListener {
 
     override fun showReviews(reviews: List<Review>) {
         if (reviews.isEmpty()) {
+            reviews_label.visibility = View.GONE
             this.reviews_container.visibility = View.GONE
             reviews_container.visibility = View.GONE
         } else {
+            reviews_label.visibility = View.VISIBLE
             this.reviews_container.visibility = View.VISIBLE
             reviews_container.visibility = View.VISIBLE
 
