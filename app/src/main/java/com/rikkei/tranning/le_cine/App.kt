@@ -38,12 +38,14 @@ class App : Application() {
         listComponent = null
     }
 
+    fun getListComponent(): ListComponent? = listComponent
+
     fun createDetailComponent(): DetailComponent {
         detailComponent = appComponent.plus(DetailModule())
         return detailComponent as DetailComponent
     }
 
-    fun releaseDetailComponent(){
+    fun releaseDetailComponent() {
         detailComponent = null
     }
 }

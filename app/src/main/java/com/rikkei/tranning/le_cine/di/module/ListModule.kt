@@ -6,6 +6,7 @@ import com.rikkei.tranning.le_cine.ui.listFragment.iterator.MoviesListIterator
 import com.rikkei.tranning.le_cine.ui.listFragment.iterator.MoviesListIteratorImpl
 import com.rikkei.tranning.le_cine.ui.listFragment.presenter.MoviesListPresenter
 import com.rikkei.tranning.le_cine.ui.listFragment.presenter.MoviesListPresenterImpl
+import com.rikkei.tranning.le_cine.ui.sortDialog.SelectOptionStore
 import dagger.Module
 import dagger.Provides
 
@@ -19,7 +20,7 @@ class ListModule {
 
     @Provides
     @ListingScope
-    fun provideMoviesListIterator(api: TmdbWebService): MoviesListIterator {
-        return MoviesListIteratorImpl(api)
+    fun provideMoviesListIterator(api: TmdbWebService, selectOptionStore: SelectOptionStore): MoviesListIterator {
+        return MoviesListIteratorImpl(api, selectOptionStore)
     }
 }

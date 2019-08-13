@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
@@ -15,6 +16,7 @@ import com.rikkei.tranning.le_cine.model.Movie
 import com.rikkei.tranning.le_cine.R
 import com.rikkei.tranning.le_cine.ui.listFragment.adapter.MovieListAdapter
 import com.rikkei.tranning.le_cine.ui.listFragment.presenter.MoviesListPresenter
+import com.rikkei.tranning.le_cine.ui.sortDialog.view.SortDialogFragment
 import kotlinx.android.synthetic.main.fragment_movie_list.*
 import javax.inject.Inject
 
@@ -34,6 +36,8 @@ class MovieListFragment : Fragment(), MoviesListView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        retainInstance = true
+        setHasOptionsMenu(true)
         (activity!!.application as App).createListComponent().inject(this)
     }
 
@@ -62,12 +66,25 @@ class MovieListFragment : Fragment(), MoviesListView {
         })
     }
 
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        if (item?.itemId == R.id.menu_item_sort) {
+            presenter.firstPage()
+            displaySortingOptions()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun displaySortingOptions() {
+        val sortDialogFragment = SortDialogFragment.newInstance(presenter)
+        sortDialogFragment.show(fragmentManager, "Select Quantity")
+    }
+
     override fun showMovies(movies: List<Movie>?) {
         (movies_list.adapter as MovieListAdapter).addMovies(movies)
     }
 
     override fun loadingStarted() {
-        Toast.makeText(context, "Loading Movies", Toast.LENGTH_SHORT).show()
+//        Toast.makeText(context, "Loading Movies", Toast.LENGTH_SHORT).show()
     }
 
     override fun loadingFailed(errorMessage: String) {
@@ -78,10 +95,25 @@ class MovieListFragment : Fragment(), MoviesListView {
         callback?.onMovieClicked(movie)
     }
 
+    fun searchViewClicked(searchText: String) {
+        presenter.searchMovie(searchText)
+    }
+
+    fun searchViewBackButtonClicked() {
+        presenter.searchMovieBackPressed()
+    }
+
+
     override fun onDetach() {
         super.onDetach()
 
         callback = null
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        presenter.destroy()
     }
 
     override fun onDestroy() {

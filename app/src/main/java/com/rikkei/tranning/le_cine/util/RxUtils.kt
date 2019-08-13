@@ -9,7 +9,7 @@ fun unsubscribeThis(subscription: Disposable?) {
     } // else subscription doesn't exist or already unsubscribed
 }
 
-fun unsubscribe(vararg subscriptions: Disposable) {
+fun unsubscribe(vararg subscriptions: Disposable?) {
     for (subscription in subscriptions) {
         unsubscribeThis(subscription)
     }
