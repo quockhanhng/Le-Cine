@@ -5,6 +5,7 @@ import com.rikkei.tranning.le_cine.ui.detailFragment.iterator.MovieDetailIterato
 import com.rikkei.tranning.le_cine.ui.detailFragment.iterator.MovieDetailIteratorImpl
 import com.rikkei.tranning.le_cine.ui.detailFragment.presenter.MovieDetailPresenter
 import com.rikkei.tranning.le_cine.ui.detailFragment.presenter.MovieDetailPresenterImpl
+import com.rikkei.tranning.le_cine.ui.favourite.FavouriteIterator
 import dagger.Module
 import dagger.Provides
 
@@ -17,7 +18,10 @@ class DetailModule {
     }
 
     @Provides
-    fun provideMovieDetailPresenter(movieDetailIterator: MovieDetailIterator): MovieDetailPresenter {
-        return MovieDetailPresenterImpl(movieDetailIterator)
+    fun provideMovieDetailPresenter(
+        movieDetailIterator: MovieDetailIterator,
+        favouriteIterator: FavouriteIterator
+    ): MovieDetailPresenter {
+        return MovieDetailPresenterImpl(movieDetailIterator, favouriteIterator)
     }
 }

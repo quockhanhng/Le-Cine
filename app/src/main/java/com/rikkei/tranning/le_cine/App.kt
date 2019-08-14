@@ -9,6 +9,7 @@ import com.rikkei.tranning.le_cine.di.module.AppModule
 import com.rikkei.tranning.le_cine.di.module.DetailModule
 import com.rikkei.tranning.le_cine.di.module.ListModule
 import com.rikkei.tranning.le_cine.di.module.NetworkModule
+import com.rikkei.tranning.le_cine.ui.favourite.FavouriteModule
 
 class App : Application() {
 
@@ -26,6 +27,7 @@ class App : Application() {
         return DaggerAppComponent.builder()
             .networkModule(NetworkModule())
             .appModule(AppModule(this))
+            .favouriteModule(FavouriteModule())
             .build()
     }
 

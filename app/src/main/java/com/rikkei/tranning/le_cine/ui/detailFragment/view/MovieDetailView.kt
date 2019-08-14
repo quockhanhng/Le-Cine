@@ -11,4 +11,8 @@ interface MovieDetailView {
     fun showTrailers(trailers: List<Video>)
 
     fun showReviews(reviews: List<Review>)
+
+    fun showFavourite()
+
+    fun showUnFavourite()
 }

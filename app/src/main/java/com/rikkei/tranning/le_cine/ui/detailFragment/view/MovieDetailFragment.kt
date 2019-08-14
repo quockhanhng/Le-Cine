@@ -4,12 +4,12 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.support.design.widget.AppBarLayout
+import android.support.design.widget.VisibilityAwareImageButton
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
 import com.rikkei.tranning.le_cine.App
@@ -24,12 +24,14 @@ import kotlinx.android.synthetic.main.fragment_movie_detail.*
 import kotlinx.android.synthetic.main.trailers_and_reviews.*
 import javax.inject.Inject
 
-class MovieDetailFragment : Fragment(), MovieDetailView, View.OnClickListener {
+class MovieDetailFragment : Fragment(), MovieDetailView, View.OnClickListener, MenuItem.OnMenuItemClickListener {
 
     @Inject
     lateinit var presenter: MovieDetailPresenter
 
     private lateinit var movie: Movie
+    private var appBarExpanded = true
+    private var collapsedMenu: Menu? = null
 
     companion object {
         fun getInstance(movie: Movie): MovieDetailFragment {
@@ -45,11 +47,32 @@ class MovieDetailFragment : Fragment(), MovieDetailView, View.OnClickListener {
         super.onCreate(savedInstanceState)
 
         retainInstance = true
+        setHasOptionsMenu(true)
         (activity?.application as App).createDetailComponent().inject(this)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_movie_detail, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        setToolBar()
+        setAppBar()
+
+        if (arguments != null) {
+            val movie = arguments!!.get(MOVIE) as Movie
+
+            this.movie = movie
+            presenter.setView(this)
+            presenter.showDetails(movie)
+            presenter.showFavouriteButton(movie)
+        }
+
+        fabFavourite.setOnClickListener(this)
+
+        collapsing_toolbar?.title = movie.title
     }
 
     private fun setToolBar() {
@@ -66,20 +89,53 @@ class MovieDetailFragment : Fragment(), MovieDetailView, View.OnClickListener {
         }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    @SuppressLint("RestrictedApi")
+    private fun setAppBar() {
+        appbar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { _, verticalOffset ->
 
-        setToolBar()
+            if (Math.abs(verticalOffset) > 280) {
+                appBarExpanded = false
+                fabFavourite.visibility = VisibilityAwareImageButton.GONE
+                activity?.invalidateOptionsMenu()
 
-        if (arguments != null) {
-            val movie = arguments!!.get(MOVIE) as Movie
+            } else {
+                appBarExpanded = true
+                fabFavourite.visibility = VisibilityAwareImageButton.VISIBLE
+                presenter.showFavouriteButton(movie)
+                activity?.invalidateOptionsMenu()
+            }
+        })
+    }
 
-            this.movie = movie
-            presenter.setView(this)
-            presenter.showDetails(movie)
+    override fun onPrepareOptionsMenu(menu: Menu?) {
+        if ((collapsedMenu != null) && (!appBarExpanded)) {
+            //collapsed
+
+            if (presenter.isFavouriteMovie(movie)) {
+                collapsedMenu!!.add("AddToFavourite")
+                    .setIcon(R.drawable.ic_full_heart)
+                    .setOnMenuItemClickListener(this)
+                    .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM)
+            } else {
+                collapsedMenu!!.add("AddToFavourite")
+                    .setIcon(R.drawable.ic_border_heart)
+                    .setOnMenuItemClickListener(this)
+                    .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM)
+            }
+        } else {
+            //expanded
         }
+        return super.onPrepareOptionsMenu(collapsedMenu)
+    }
 
-        collapsing_toolbar?.title = movie.title
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        inflater?.inflate(R.menu.detail_menu, menu)
+        collapsedMenu = menu
+    }
+
+    override fun onMenuItemClick(item: MenuItem?): Boolean {
+        presenter.onFavouriteClick(movie)
+        return true
     }
 
     @SuppressLint("SetTextI18n")
@@ -151,6 +207,14 @@ class MovieDetailFragment : Fragment(), MovieDetailView, View.OnClickListener {
         }
     }
 
+    override fun showFavourite() {
+        fabFavourite.setImageDrawable(ContextCompat.getDrawable(context!!, R.drawable.ic_full_heart))
+    }
+
+    override fun showUnFavourite() {
+        fabFavourite.setImageDrawable(ContextCompat.getDrawable(context!!, R.drawable.ic_border_heart))
+    }
+
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.video_thumb -> {
@@ -158,6 +222,10 @@ class MovieDetailFragment : Fragment(), MovieDetailView, View.OnClickListener {
             }
             R.id.review_content -> {
                 onReviewClicked(v as TextView)
+            }
+
+            R.id.fabFavourite -> {
+                onFavouriteClicked()
             }
         }
     }
@@ -172,6 +240,10 @@ class MovieDetailFragment : Fragment(), MovieDetailView, View.OnClickListener {
         if (view.maxLines == 5)
             view.maxLines = 500
         else view.maxLines = 5
+    }
+
+    private fun onFavouriteClicked() {
+        presenter.onFavouriteClick(movie)
     }
 
     override fun onDestroy() {

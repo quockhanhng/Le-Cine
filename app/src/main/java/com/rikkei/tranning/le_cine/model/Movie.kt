@@ -45,6 +45,18 @@ data class Movie(
         override fun newArray(size: Int): Array<Movie?> {
             return arrayOfNulls(size)
         }
+
+        fun newMovie(
+            id: String,
+            overview: String,
+            releaseDate: String,
+            posterPath: String,
+            backdropPath: String,
+            title: String,
+            voteAverage: Double
+        ): Movie {
+            return Movie(id, overview, releaseDate, posterPath, backdropPath, title, voteAverage)
+        }
     }
 
     fun getPosterUrl(): String {

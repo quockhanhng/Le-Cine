@@ -13,5 +13,11 @@ interface MovieDetailPresenter {
 
     fun showReviews(movie: Movie)
 
+    fun showFavouriteButton(movie: Movie)
+
+    fun isFavouriteMovie(movie: Movie) : Boolean
+
+    fun onFavouriteClick(movie: Movie)
+
     fun destroy()
 }
