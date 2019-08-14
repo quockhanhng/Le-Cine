@@ -7,4 +7,5 @@ interface MoviesListIterator {
 
     fun fetchMovies(page: Int): Observable<List<Movie>>
     fun searchMovie(searchQuery: String): Observable<List<Movie>>
+    fun isMoviesLoadFromFavourites(): Boolean
 }

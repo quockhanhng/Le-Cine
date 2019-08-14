@@ -17,7 +17,8 @@ class SortDialogPresenterImpl(var iterator: SortDialogIterator) : SortDialogPres
             when (iterator.getSelectedSortingOption()) {
                 SortType.MOST_POPULAR.value -> it.setPopularChecked()
                 SortType.HIGHEST_RATED.value -> it.setHighestRatedChecked()
-                else -> it.setNewestChecked()
+                SortType.NEWEST.value -> it.setNewestChecked()
+                else -> it.setFavouriteChecked()
             }
         }
     }
@@ -39,6 +40,13 @@ class SortDialogPresenterImpl(var iterator: SortDialogIterator) : SortDialogPres
     override fun onNewestMoviesSelected() {
         view?.let {
             iterator.setSortingOption(SortType.NEWEST)
+            it.dismissDialog()
+        }
+    }
+
+    override fun onFavouriteMoviesSelected() {
+        view?.let {
+            iterator.setSortingOption(SortType.FAVOURITE)
             it.dismissDialog()
         }
     }

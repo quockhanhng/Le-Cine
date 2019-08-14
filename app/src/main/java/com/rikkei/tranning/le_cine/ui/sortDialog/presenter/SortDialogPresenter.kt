@@ -14,5 +14,7 @@ interface SortDialogPresenter {
 
     fun onNewestMoviesSelected()
 
+    fun onFavouriteMoviesSelected()
+
     fun destroy()
 }

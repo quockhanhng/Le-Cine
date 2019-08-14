@@ -2,6 +2,7 @@ package com.rikkei.tranning.le_cine.di.module
 
 import com.rikkei.tranning.le_cine.api.TmdbWebService
 import com.rikkei.tranning.le_cine.di.scope.ListingScope
+import com.rikkei.tranning.le_cine.ui.favourite.FavouriteIterator
 import com.rikkei.tranning.le_cine.ui.listFragment.iterator.MoviesListIterator
 import com.rikkei.tranning.le_cine.ui.listFragment.iterator.MoviesListIteratorImpl
 import com.rikkei.tranning.le_cine.ui.listFragment.presenter.MoviesListPresenter
@@ -20,7 +21,11 @@ class ListModule {
 
     @Provides
     @ListingScope
-    fun provideMoviesListIterator(api: TmdbWebService, selectOptionStore: SelectOptionStore): MoviesListIterator {
-        return MoviesListIteratorImpl(api, selectOptionStore)
+    fun provideMoviesListIterator(
+        api: TmdbWebService,
+        selectOptionStore: SelectOptionStore,
+        favouriteIterator: FavouriteIterator
+    ): MoviesListIterator {
+        return MoviesListIteratorImpl(api, selectOptionStore, favouriteIterator)
     }
 }

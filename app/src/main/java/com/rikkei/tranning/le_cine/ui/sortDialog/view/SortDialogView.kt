@@ -8,5 +8,7 @@ interface SortDialogView {
 
     fun setNewestChecked()
 
+    fun setFavouriteChecked()
+
     fun dismissDialog()
 }

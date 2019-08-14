@@ -25,6 +25,7 @@ class SortDialogFragment : DialogFragment(), SortDialogView, RadioGroup.OnChecke
     private lateinit var rbMostPopular: RadioButton
     private lateinit var rbHighestRated: RadioButton
     private lateinit var rbNewest: RadioButton
+    private lateinit var rbFavourite: RadioButton
 
     companion object {
         fun newInstance(moviesListPresenter: MoviesListPresenter): SortDialogFragment {
@@ -62,6 +63,7 @@ class SortDialogFragment : DialogFragment(), SortDialogView, RadioGroup.OnChecke
         rbMostPopular = dialogView.findViewById(R.id.most_popular)
         rbHighestRated = dialogView.findViewById(R.id.highest_rated)
         rbNewest = dialogView.findViewById(R.id.newest)
+        rbFavourite = dialogView.findViewById(R.id.favourite)
         presenter.setLastSavedOption()
         sortingGroup.setOnCheckedChangeListener(this)
     }
@@ -80,6 +82,10 @@ class SortDialogFragment : DialogFragment(), SortDialogView, RadioGroup.OnChecke
                 presenter.onNewestMoviesSelected()
                 moviesListPresenter.firstPage()
             }
+            R.id.favourite -> {
+                presenter.onFavouriteMoviesSelected()
+                moviesListPresenter.firstPage()
+            }
         }
     }
 
@@ -93,6 +99,10 @@ class SortDialogFragment : DialogFragment(), SortDialogView, RadioGroup.OnChecke
 
     override fun setNewestChecked() {
         rbNewest.isChecked = true
+    }
+
+    override fun setFavouriteChecked() {
+        rbFavourite.isChecked = true
     }
 
     override fun dismissDialog() {

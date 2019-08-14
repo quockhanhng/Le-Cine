@@ -28,8 +28,10 @@ class MoviesListPresenterImpl(val iterator: MoviesListIterator) :
     override fun nextPage() {
         if (showingSearchResult)
             return
-        currentPage++
-        displayMovies()
+        if (iterator.isMoviesLoadFromFavourites()) {
+            currentPage++
+            displayMovies()
+        }
     }
 
     override fun setView(view: MoviesListView) {
@@ -66,9 +68,9 @@ class MoviesListPresenterImpl(val iterator: MoviesListIterator) :
     private fun onMovieSearchSuccess(movies: List<Movie>) {
         loadedMovies.clear()
         loadedMovies = ArrayList(movies)
-        if (isViewAttached()) {
-            view?.showMovies(loadedMovies)
-        }
+
+        view?.showMovies(loadedMovies)
+
     }
 
     private fun onMovieSearchFailed(e: Throwable) {
@@ -89,11 +91,11 @@ class MoviesListPresenterImpl(val iterator: MoviesListIterator) :
     }
 
     private fun onMovieFetchSuccess(movies: List<Movie>) {
-        loadedMovies.addAll(movies)
-
-        if (isViewAttached()) {
-            view?.showMovies(loadedMovies)
-        }
+        if (iterator.isMoviesLoadFromFavourites())
+            loadedMovies.addAll(movies)
+        else
+            loadedMovies = ArrayList(movies)
+        view?.showMovies(loadedMovies)
     }
 
     private fun onMovieFetchFailed(e: Throwable) {
@@ -101,12 +103,6 @@ class MoviesListPresenterImpl(val iterator: MoviesListIterator) :
     }
 
     private fun showLoading() {
-        if (isViewAttached()) {
-            view?.loadingStarted()
-        }
-    }
-
-    private fun isViewAttached(): Boolean {
-        return view != null
+        view?.loadingStarted()
     }
 }
