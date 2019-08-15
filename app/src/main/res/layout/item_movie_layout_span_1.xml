@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_gravity="center"
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_margin="1dp"
+        android:foreground="?attr/selectableItemBackground">
+
+    <ImageView
+            android:id="@+id/item_poster_span_1"
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"/>
+
+    <TextView
+            android:id="@+id/item_year_span_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/item_poster_span_1"
+            android:layout_marginTop="12dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="18sp"
+            tools:text="2019"/>
+
+    <TextView
+            android:id="@+id/item_title_span_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/item_poster_span_1"
+            android:layout_below="@+id/item_year_span_1"
+            android:layout_marginTop="5dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:textColor="@android:color/black"
+            android:textSize="20sp"
+            tools:text="Spiderman: Far from home"
+    />
+
+    <ImageView
+            android:id="@+id/item_imgTmDB_span_1"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/ic_tmdb"
+            android:layout_toEndOf="@+id/item_poster_span_1"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginBottom="10dp"
+    />
+
+    <TextView
+            android:id="@+id/item_rated_span_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/item_imgTmDB_span_1"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="5dp"
+            android:layout_marginBottom="12dp"
+            android:textSize="18sp"
+            android:textColor="@android:color/black"
+            tools:text="7.8"
+    />
+</RelativeLayout>

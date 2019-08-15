@@ -10,6 +10,13 @@
             app:showAsAction="always"/>
 
     <item
+            android:id="@+id/menu_switch_layout"
+            android:title="Switch"
+            android:orderInCategory="90"
+            app:showAsAction="always"
+            android:icon="@drawable/ic_span_1"/>
+
+    <item
             android:id="@+id/menu_item_search"
             android:icon="@android:drawable/ic_menu_search"
             android:title="Search"

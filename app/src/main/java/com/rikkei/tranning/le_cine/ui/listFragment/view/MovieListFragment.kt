@@ -10,11 +10,12 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import com.rikkei.tranning.le_cine.App
 import com.rikkei.tranning.le_cine.model.Movie
 import com.rikkei.tranning.le_cine.R
 import com.rikkei.tranning.le_cine.ui.listFragment.adapter.MovieListAdapter
+import com.rikkei.tranning.le_cine.ui.listFragment.adapter.MovieListAdapter.Companion.SPAN_COUNT_ONE
+import com.rikkei.tranning.le_cine.ui.listFragment.adapter.MovieListAdapter.Companion.SPAN_COUNT_THREE
 import com.rikkei.tranning.le_cine.ui.listFragment.presenter.MoviesListPresenter
 import com.rikkei.tranning.le_cine.ui.sortDialog.view.SortDialogFragment
 import kotlinx.android.synthetic.main.fragment_movie_list.*
@@ -26,6 +27,8 @@ class MovieListFragment : Fragment(), MoviesListView {
     lateinit var presenter: MoviesListPresenter
 
     private var callback: Callback? = null
+    private lateinit var gridLayoutManager: GridLayoutManager
+    private lateinit var movieListAdapter: MovieListAdapter
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
@@ -52,9 +55,11 @@ class MovieListFragment : Fragment(), MoviesListView {
     }
 
     private fun initLayout() {
+        gridLayoutManager = GridLayoutManager(context, SPAN_COUNT_THREE)
         movies_list.setHasFixedSize(true)
-        movies_list.layoutManager = GridLayoutManager(context, 2)
-        movies_list.adapter = MovieListAdapter(this)
+        movies_list.layoutManager = gridLayoutManager
+        movieListAdapter = MovieListAdapter(this, gridLayoutManager)
+        movies_list.adapter = movieListAdapter
 
         movies_list.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
@@ -67,11 +72,36 @@ class MovieListFragment : Fragment(), MoviesListView {
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        if (item?.itemId == R.id.menu_item_sort) {
-            presenter.firstPage()
-            displaySortingOptions()
+        return when (item?.itemId) {
+            R.id.menu_item_sort -> {
+                presenter.firstPage()
+                displaySortingOptions()
+                true
+            }
+            R.id.menu_switch_layout -> {
+                switchItemIcon(item)
+                switchLayout()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
-        return super.onOptionsItemSelected(item)
+    }
+
+    private fun switchLayout() {
+        if (gridLayoutManager.spanCount == SPAN_COUNT_ONE) {
+            gridLayoutManager.spanCount = SPAN_COUNT_THREE
+        } else {
+            gridLayoutManager.spanCount = SPAN_COUNT_ONE
+        }
+        movieListAdapter.notifyItemRangeChanged(0, movieListAdapter.itemCount)
+    }
+
+    private fun switchItemIcon(item: MenuItem) {
+        if (gridLayoutManager.spanCount == SPAN_COUNT_THREE) {
+            item.setIcon(R.drawable.ic_span_3)
+        } else {
+            item.setIcon(R.drawable.ic_span_1)
+        }
     }
 
     private fun displaySortingOptions() {
