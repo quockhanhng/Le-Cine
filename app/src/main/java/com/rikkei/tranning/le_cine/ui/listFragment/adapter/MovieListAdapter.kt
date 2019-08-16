@@ -17,7 +17,7 @@ import java.util.ArrayList
 class MovieListAdapter(private var moviesView: MoviesListView, private var layoutManager: GridLayoutManager) :
     RecyclerView.Adapter<MovieListAdapter.ViewHolder>() {
 
-    private var movies: List<Movie> = ArrayList()
+    private var movies: ArrayList<Movie> = ArrayList()
 
     companion object {
         const val SPAN_COUNT_ONE = 1
@@ -54,12 +54,17 @@ class MovieListAdapter(private var moviesView: MoviesListView, private var layou
         return ViewHolder(view, viewType)
     }
 
-    fun addMovies(movies: List<Movie>?) {
+    fun addMovies(movies: ArrayList<Movie>?) {
         if (movies != null) {
             this.movies = movies
             notifyDataSetChanged()
         }
         Log.d("Log MovieListAdapter", this.movies.size.toString())
+    }
+
+    fun clear(){
+        movies.clear()
+        notifyDataSetChanged()
     }
 
     inner class ViewHolder(view: View, private var viewType: Int) : RecyclerView.ViewHolder(view),

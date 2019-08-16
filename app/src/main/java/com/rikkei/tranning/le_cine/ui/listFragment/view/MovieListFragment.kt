@@ -74,7 +74,7 @@ class MovieListFragment : Fragment(), MoviesListView {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         return when (item?.itemId) {
             R.id.menu_item_sort -> {
-                presenter.firstPage()
+//                presenter.firstPage()
                 displaySortingOptions()
                 true
             }
@@ -109,16 +109,28 @@ class MovieListFragment : Fragment(), MoviesListView {
         sortDialogFragment.show(fragmentManager, "Select Quantity")
     }
 
-    override fun showMovies(movies: List<Movie>?) {
-        (movies_list.adapter as MovieListAdapter).addMovies(movies)
+    override fun showMovies(movies: ArrayList<Movie>?) {
+        movieListAdapter.addMovies(movies)
+    }
+
+    override fun clearMovies() {
+        movieListAdapter.clear()
     }
 
     override fun loadingStarted() {
-//        Toast.makeText(context, "Loading Movies", Toast.LENGTH_SHORT).show()
+        startProgressBar()
     }
 
     override fun loadingFailed(errorMessage: String) {
         Snackbar.make(movies_list, errorMessage, Snackbar.LENGTH_INDEFINITE).show()
+    }
+
+    override fun startProgressBar() {
+        progressBar.visibility = View.VISIBLE
+    }
+
+    override fun stopProgressBar() {
+        progressBar.visibility = View.GONE
     }
 
     override fun onMovieClicked(movie: Movie) {

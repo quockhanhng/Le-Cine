@@ -22,6 +22,7 @@ class MoviesListPresenterImpl(val iterator: MoviesListIterator) :
     override fun firstPage() {
         currentPage = 1
         loadedMovies.clear()
+        view?.clearMovies()
         displayMovies()
     }
 
@@ -96,10 +97,12 @@ class MoviesListPresenterImpl(val iterator: MoviesListIterator) :
         else
             loadedMovies = ArrayList(movies)
         view?.showMovies(loadedMovies)
+        view?.stopProgressBar()
     }
 
     private fun onMovieFetchFailed(e: Throwable) {
         e.message?.let { view?.loadingFailed(it) }
+        view?.stopProgressBar()
     }
 
     private fun showLoading() {

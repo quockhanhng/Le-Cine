@@ -30,7 +30,7 @@ class DatabaseHelper @Inject constructor(context: Context?) : SQLiteOpenHelper(c
         contentValues.put("POSTER_PATH", movie.posterPath)
         contentValues.put("BACKDROP_PATH", movie.backdropPath)
         contentValues.put("TITLE", movie.title)
-        contentValues.put("VOTE_AVERAGE", movie.releaseDate)
+        contentValues.put("VOTE_AVERAGE", movie.voteAverage)
 
         db.insert("MOVIE", null, contentValues)
         db.close()

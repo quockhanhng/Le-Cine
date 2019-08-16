@@ -2,8 +2,17 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="match_parent" xmlns:app="http://schemas.android.com/apk/res-auto"
         tools:context="com.rikkei.tranning.le_cine.ui.listFragment.view.MovieListFragment">
+
+    <fr.castorflex.android.circularprogressbar.CircularProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            app:cpb_colors="@array/myColors"
+            android:indeterminate="true"
+            android:indeterminateOnly="false"/>
 
     <android.support.v7.widget.RecyclerView
             android:id="@+id/movies_list"
