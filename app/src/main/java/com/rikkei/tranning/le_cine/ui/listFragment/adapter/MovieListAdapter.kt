@@ -1,6 +1,5 @@
 package com.rikkei.tranning.le_cine.ui.listFragment.adapter
 
-import android.graphics.Rect
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
@@ -76,18 +75,23 @@ class MovieListAdapter(private var moviesView: MoviesListView, private var layou
             if (viewType == VIEW_TYPE_BIG) {
                 item_title_span_1.text = movie.title
 
-                Picasso.get()
-                    .load(movie.getPosterUrl())
-                    .into(item_poster_span_1)
+                if (movie.posterPath != null)
+                    Picasso.get()
+                        .load(movie.getPosterUrl())
+                        .into(item_poster_span_1)
+                else
+                    item_poster_span_1.setImageResource(R.drawable.default_poster)
 
                 item_year_span_1.text = movie.releaseDate
-                item_rated_span_1.text = movie.voteAverage.toString()
+                item_rated_span_1.text = if (movie.voteAverage != 0.0) movie.voteAverage.toString() else "--"
             } else {
                 item_title_span_3.text = movie.title
 
-                Picasso.get()
-                    .load(movie.getPosterUrl())
-                    .into(item_poster_span_3)
+                if (movie.posterPath != null)
+                    Picasso.get()
+                        .load(movie.getPosterUrl())
+                        .into(item_poster_span_3)
+                else item_poster_span_3.setImageResource(R.drawable.default_poster)
             }
         }
     }

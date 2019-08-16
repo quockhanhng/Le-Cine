@@ -140,12 +140,16 @@ class MovieDetailFragment : Fragment(), MovieDetailView, View.OnClickListener, M
 
     @SuppressLint("SetTextI18n")
     override fun showDetails(movie: Movie) {
-        Picasso.get()
-            .load(movie.getBackDropPath())
-            .into(movie_poster)
+        if (movie.backdropPath != null) {
+            Picasso.get()
+                .load(movie.getBackDropPath())
+                .into(movie_poster)
+        } else {
+            movie_poster.setImageResource(R.drawable.default_poster)
+        }
         movie_name.text = movie.title
         movie_year.text = "Release Date: ${movie.releaseDate}"
-        movie_rating.text = "${movie.voteAverage} / 10"
+        movie_rating.text = if (movie.voteAverage != 0.0) "${movie.voteAverage} / 10" else "--"
         movie_description.text = movie.overview
         presenter.showTrailers(movie)
         presenter.showReviews(movie)
