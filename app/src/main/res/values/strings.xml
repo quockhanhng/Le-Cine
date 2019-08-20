@@ -11,4 +11,5 @@
     <string name="menu_item_switch">Switch</string>
     <string name="menu_item_search">Search</string>
     <string name="menu_item_share">Share</string>
+    <string name="casts">Cast</string>
 </resources>

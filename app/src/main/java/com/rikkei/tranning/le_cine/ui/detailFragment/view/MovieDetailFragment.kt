@@ -14,12 +14,14 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.rikkei.tranning.le_cine.App
 import com.rikkei.tranning.le_cine.R
+import com.rikkei.tranning.le_cine.model.Cast
 import com.rikkei.tranning.le_cine.model.Movie
 import com.rikkei.tranning.le_cine.model.Review
 import com.rikkei.tranning.le_cine.model.Video
 import com.rikkei.tranning.le_cine.ui.detailFragment.presenter.MovieDetailPresenter
 import com.rikkei.tranning.le_cine.util.MOVIE
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.casts_container.*
 import kotlinx.android.synthetic.main.fragment_movie_detail.*
 import kotlinx.android.synthetic.main.trailers_and_reviews.*
 import javax.inject.Inject
@@ -177,6 +179,7 @@ class MovieDetailFragment : Fragment(), MovieDetailView, View.OnClickListener, M
         movie_description.text = movie.overview
         presenter.showTrailers(movie)
         presenter.showReviews(movie)
+        presenter.showCast(movie)
     }
 
     override fun showTrailers(trailers: List<Video>) {
@@ -237,6 +240,44 @@ class MovieDetailFragment : Fragment(), MovieDetailView, View.OnClickListener, M
         }
     }
 
+    override fun showCasts(casts: List<Cast>) {
+        if (casts.isEmpty()) {
+            casts_label.visibility = View.GONE
+            this.casts.visibility = View.GONE
+            casts_container.visibility = View.GONE
+
+        } else {
+            casts_label.visibility = View.VISIBLE
+            this.casts.visibility = View.VISIBLE
+            casts_container.visibility = View.VISIBLE
+
+            this.casts.removeAllViews()
+            val inflater = activity!!.layoutInflater
+
+            for (cast in casts) {
+                val castContainer = inflater.inflate(R.layout.cast, this.casts, false)
+                val castThumbView = castContainer.findViewById<ImageView>(R.id.cast_thumb)
+                val castNameView = castContainer.findViewById<TextView>(R.id.cast_name)
+                val castCharacterView = castContainer.findViewById<TextView>(R.id.cast_character)
+
+                castThumbView.setOnClickListener(this)
+
+                if (cast.profilePath == null) {
+                    castThumbView.setImageResource(R.drawable.ic_default_profile)
+                } else
+                    Picasso.get()
+                        .load(cast.getProfileUrl())
+                        .resize(100, 100)
+                        .centerCrop()
+                        .into(castThumbView)
+                castNameView.text = cast.name
+                castCharacterView.text = cast.character
+
+                this.casts.addView(castContainer)
+            }
+        }
+    }
+
     override fun showFavourite() {
         fabFavourite.setImageDrawable(ContextCompat.getDrawable(context!!, R.drawable.ic_full_heart))
     }
@@ -252,6 +293,10 @@ class MovieDetailFragment : Fragment(), MovieDetailView, View.OnClickListener, M
             }
             R.id.review_content -> {
                 onReviewClicked(v as TextView)
+            }
+
+            R.id.cast_thumb -> {
+               //TODO Open profile
             }
 
             R.id.fabFavourite -> {

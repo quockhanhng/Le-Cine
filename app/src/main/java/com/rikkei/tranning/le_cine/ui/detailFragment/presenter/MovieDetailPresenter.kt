@@ -13,6 +13,8 @@ interface MovieDetailPresenter {
 
     fun showReviews(movie: Movie)
 
+    fun showCast(movie: Movie)
+
     fun showFavouriteButton(movie: Movie)
 
     fun isFavouriteMovie(movie: Movie) : Boolean

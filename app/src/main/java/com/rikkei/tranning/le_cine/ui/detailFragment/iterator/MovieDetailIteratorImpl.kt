@@ -1,10 +1,7 @@
 package com.rikkei.tranning.le_cine.ui.detailFragment.iterator
 
 import com.rikkei.tranning.le_cine.api.TmdbWebService
-import com.rikkei.tranning.le_cine.model.Review
-import com.rikkei.tranning.le_cine.model.ReviewResponse
-import com.rikkei.tranning.le_cine.model.Video
-import com.rikkei.tranning.le_cine.model.VideoResponse
+import com.rikkei.tranning.le_cine.model.*
 import io.reactivex.Observable
 
 class MovieDetailIteratorImpl(private var tmdbWebService: TmdbWebService) : MovieDetailIterator {
@@ -15,5 +12,9 @@ class MovieDetailIteratorImpl(private var tmdbWebService: TmdbWebService) : Movi
 
     override fun getReviews(id: String): Observable<List<Review>> {
         return tmdbWebService.reviews(id).map(ReviewResponse::getReviewsList)
+    }
+
+    override fun getCasts(id: String): Observable<List<Cast>> {
+        return tmdbWebService.casts(id).map(CastResponse::getCastsList)
     }
 }

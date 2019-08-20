@@ -133,6 +133,12 @@
                     android:textColor="@android:color/black"/>
 
             <include
+                    layout="@layout/casts_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dimen_margin"/>
+
+            <include
                     layout="@layout/trailers_and_reviews"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

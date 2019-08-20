@@ -1,5 +1,6 @@
 package com.rikkei.tranning.le_cine.ui.detailFragment.presenter
 
+import com.rikkei.tranning.le_cine.model.Cast
 import com.rikkei.tranning.le_cine.model.Movie
 import com.rikkei.tranning.le_cine.model.Review
 import com.rikkei.tranning.le_cine.model.Video
@@ -19,6 +20,7 @@ class MovieDetailPresenterImpl(
     private var view: MovieDetailView? = null
     private lateinit var trailersSubscription: Disposable
     private lateinit var reviewSubscription: Disposable
+    private lateinit var castSubscription: Disposable
 
 
     override fun setView(view: MovieDetailView) {
@@ -58,6 +60,20 @@ class MovieDetailPresenterImpl(
     private fun onGetReviewsFailure() {
     }
 
+    override fun showCast(movie: Movie) {
+        castSubscription = movieIterator.getCasts(movie.id)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ onGetCastsSuccess(it) }, { onGetCastsFailure() })
+    }
+
+    private fun onGetCastsSuccess(casts: List<Cast>) {
+        view?.showCasts(casts)
+    }
+
+    private fun onGetCastsFailure() {
+    }
+
     override fun showFavouriteButton(movie: Movie) {
         if (favouriteIterator.isFavorite(movie.id)) {
             view?.showFavourite()
@@ -83,6 +99,6 @@ class MovieDetailPresenterImpl(
 
     override fun destroy() {
         view = null
-        unsubscribe(trailersSubscription, reviewSubscription)
+        unsubscribe(trailersSubscription, reviewSubscription, castSubscription)
     }
 }
