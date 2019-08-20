@@ -30,7 +30,17 @@ data class Movie(
             voteAverage: Double,
             genresString: String
         ): Movie {
-            return Movie(id, overview, releaseDate, posterPath, backdropPath, title, genreIds, voteAverage,genresString)
+            return Movie(
+                id,
+                overview,
+                releaseDate,
+                posterPath,
+                backdropPath,
+                title,
+                genreIds,
+                voteAverage,
+                genresString
+            )
         }
     }
 
@@ -52,7 +62,9 @@ data class Movie(
                 }
             }
         }
-        result = result.substring(0, result.length - 2)
+        result = if (result != "") {
+            result.substring(0, result.length - 2)
+        } else "--"
         return result
     }
 }
