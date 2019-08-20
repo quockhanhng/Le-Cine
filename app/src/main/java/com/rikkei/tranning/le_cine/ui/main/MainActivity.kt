@@ -9,6 +9,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.FrameLayout
+import android.widget.Toast
 import com.jakewharton.rxbinding2.support.v7.widget.RxSearchView
 import com.rikkei.tranning.le_cine.R
 import com.rikkei.tranning.le_cine.model.Movie
@@ -24,6 +25,8 @@ class MainActivity : AppCompatActivity(), MovieListFragment.Callback {
 
     private var isInitDetailActivity: Boolean = false
     private var searchViewTextSubscription: Disposable? = null
+    private val TIME_INTERVAL = 2000
+    private var mBackPressed: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -106,6 +109,15 @@ class MainActivity : AppCompatActivity(), MovieListFragment.Callback {
         extras.putParcelable(MOVIE, movie)
         intent.putExtras(extras)
         startActivity(intent)
+    }
+
+    override fun onBackPressed() {
+        if (mBackPressed + TIME_INTERVAL > System.currentTimeMillis()) {
+            super.onBackPressed()
+            return
+        } else
+            Toast.makeText(this, "Tap BACK button again in order to exit", Toast.LENGTH_SHORT).show()
+        mBackPressed = System.currentTimeMillis()
     }
 
     override fun onDestroy() {
