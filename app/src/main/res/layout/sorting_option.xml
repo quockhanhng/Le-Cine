@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -9,46 +10,47 @@
             android:id="@+id/sorting_group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:orientation="vertical">
+            android:layout_margin="@dimen/dimen_margin"
+            android:orientation="vertical"
+            tools:ignore="UselessParent">
 
         <RadioButton
                 android:id="@+id/most_popular"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingBottom="8dp"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
+                android:paddingLeft="@dimen/dimen_margin"
+                android:paddingRight="@dimen/dimen_margin"
                 android:paddingTop="8dp"
-                android:text="Most Popular"/>
+                android:text="@string/rb_most_popular"/>
 
         <RadioButton
                 android:id="@+id/highest_rated"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingBottom="8dp"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
+                android:paddingLeft="@dimen/dimen_margin"
+                android:paddingRight="@dimen/dimen_margin"
                 android:paddingTop="8dp"
-                android:text="Highest Rated"/>
+                android:text="@string/rb_highest_rated"/>
 
         <RadioButton
                 android:id="@+id/newest"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingBottom="8dp"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
+                android:paddingLeft="@dimen/dimen_margin"
+                android:paddingRight="@dimen/dimen_margin"
                 android:paddingTop="8dp"
-                android:text="Newest"/>
+                android:text="@string/rb_newest"/>
         <RadioButton
                 android:id="@+id/favourite"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingBottom="8dp"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
+                android:paddingLeft="@dimen/dimen_margin"
+                android:paddingRight="@dimen/dimen_margin"
                 android:paddingTop="8dp"
-                android:text="Favourite"/>
+                android:text="@string/rb_favourite"/>
     </RadioGroup>
 </LinearLayout>

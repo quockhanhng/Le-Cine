@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">Le Ciné</string>
+    <string name="rb_most_popular">Most Popular</string>
+    <string name="rb_highest_rated">Highest Rated</string>
+    <string name="rb_newest">Newest</string>
+    <string name="rb_favourite">Favourite</string>
+    <string name="detail_summary">Summary</string>
+    <string name="trailers">Trailers</string>
+    <string name="reviews">Reviews</string>
+    <string name="menu_item_filter">Filter</string>
+    <string name="menu_item_switch">Switch</string>
+    <string name="menu_item_search">Search</string>
+    <string name="menu_item_share">Share</string>
 </resources>

@@ -1,17 +1,18 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-      xmlns:app="http://schemas.android.com/apk/res-auto"
-      xmlns:tools="http://schemas.android.com/tools"
-      tools:context=".listing.MoviesListingActivity">
+<menu
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:context=".listing.MoviesListingActivity">
     <item
             android:id="@+id/menu_item_sort"
             android:icon="@android:drawable/ic_menu_sort_by_size"
             android:orderInCategory="100"
-            android:title="Filter"
+            android:title="@string/menu_item_filter"
             app:showAsAction="always"/>
 
     <item
             android:id="@+id/menu_switch_layout"
-            android:title="Switch"
+            android:title="@string/menu_item_switch"
             android:orderInCategory="90"
             app:showAsAction="always"
             android:icon="@drawable/ic_span_1"/>
@@ -19,7 +20,7 @@
     <item
             android:id="@+id/menu_item_search"
             android:icon="@android:drawable/ic_menu_search"
-            android:title="Search"
+            android:title="@string/menu_item_search"
             app:actionViewClass="android.support.v7.widget.SearchView"
             app:showAsAction="ifRoom|collapseActionView"/>
 

@@ -9,7 +9,7 @@
             android:id="@+id/trailers_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Trailers"
+            android:text="@string/trailers"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
             android:textColor="@android:color/black"
     />
@@ -33,7 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Reviews"
+            android:text="@string/reviews"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
             android:textColor="@android:color/black"
     />
