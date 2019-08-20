@@ -32,6 +32,7 @@ class MovieDetailFragment : Fragment(), MovieDetailView, View.OnClickListener, M
     private lateinit var movie: Movie
     private var appBarExpanded = true
     private var collapsedMenu: Menu? = null
+    private var trailerPath: String? = null
 
     companion object {
         fun getInstance(movie: Movie): MovieDetailFragment {
@@ -133,6 +134,28 @@ class MovieDetailFragment : Fragment(), MovieDetailView, View.OnClickListener, M
         collapsedMenu = menu
     }
 
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        return when (item?.itemId) {
+            R.id.menu_item_share -> {
+
+                trailerPath = if (trailerPath == null) "" else "Youtube Trailer: $trailerPath\n\n"
+
+                val textToSend = "Check out ${movie.title}\n\n${trailerPath}Brought to you by Le Ciné: The Movie Guide"
+
+                val sendIntent: Intent = Intent().apply {
+                    action = Intent.ACTION_SEND
+                    putExtra(Intent.EXTRA_TEXT, textToSend)
+                    type = "text/plain"
+                }
+
+                startActivity(Intent.createChooser(sendIntent, "Share '${movie.title}' via"))
+                true
+            }
+            else ->
+                super.onOptionsItemSelected(item)
+        }
+    }
+
     override fun onMenuItemClick(item: MenuItem?): Boolean {
         presenter.onFavouriteClick(movie)
         return true
@@ -166,6 +189,8 @@ class MovieDetailFragment : Fragment(), MovieDetailView, View.OnClickListener, M
             trailers_label.visibility = View.VISIBLE
             this.trailers.visibility = View.VISIBLE
             trailers_container.visibility = View.VISIBLE
+
+            trailerPath = Video.getUrl(trailers[0])
 
             this.trailers.removeAllViews()
             val inflater = activity!!.layoutInflater
