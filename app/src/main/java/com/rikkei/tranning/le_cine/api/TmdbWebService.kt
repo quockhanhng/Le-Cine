@@ -1,5 +1,6 @@
 package com.rikkei.tranning.le_cine.api
 
+import com.rikkei.tranning.le_cine.model.GenreResponse
 import com.rikkei.tranning.le_cine.model.MovieResponse
 import com.rikkei.tranning.le_cine.model.ReviewResponse
 import com.rikkei.tranning.le_cine.model.VideoResponse
@@ -28,4 +29,6 @@ interface TmdbWebService {
     @GET("3/movie/{movieId}/reviews")
     fun reviews(@Path("movieId") movieId: String): Observable<ReviewResponse>
 
+    @GET("/3/genre/movie/list")
+    fun genres(): Observable<GenreResponse>
 }

@@ -27,7 +27,7 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:textColor="@android:color/darker_gray"
-            android:textSize="18sp"
+            android:textSize="14sp"
             tools:text="2019"/>
 
     <TextView
@@ -40,8 +40,22 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:textColor="@android:color/black"
-            android:textSize="20sp"
-            tools:text="Spiderman: Far from home"
+            android:textSize="18sp"
+            tools:text="Spider-man: Far from home"
+    />
+
+    <TextView
+            android:id="@+id/item_genres_span_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/item_poster_span_1"
+            android:layout_below="@id/item_title_span_1"
+            android:layout_marginTop="5dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="14sp"
+            tools:text="Super Hero"
     />
 
     <ImageView
@@ -63,7 +77,7 @@
             android:layout_alignParentBottom="true"
             android:layout_marginStart="5dp"
             android:layout_marginBottom="12dp"
-            android:textSize="18sp"
+            android:textSize="16dp"
             android:textColor="@android:color/black"
             tools:text="7.8"
     />

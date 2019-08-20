@@ -4,6 +4,8 @@ import com.rikkei.tranning.le_cine.ui.listFragment.view.MoviesListView
 
 interface MoviesListPresenter {
 
+    fun getGenres()
+
     fun firstPage()
 
     fun nextPage()

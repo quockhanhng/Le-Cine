@@ -148,6 +148,7 @@ class MovieDetailFragment : Fragment(), MovieDetailView, View.OnClickListener, M
             movie_poster.setImageResource(R.drawable.default_poster)
         }
         movie_name.text = movie.title
+        movie_genres.text = "Genre: " + movie.genresString
         movie_year.text = "Release Date: ${movie.releaseDate}"
         movie_rating.text = if (movie.voteAverage != 0.0) "${movie.voteAverage} / 10" else "--"
         movie_description.text = movie.overview

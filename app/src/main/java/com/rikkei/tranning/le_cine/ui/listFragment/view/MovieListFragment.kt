@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import com.rikkei.tranning.le_cine.App
 import com.rikkei.tranning.le_cine.model.Movie
 import com.rikkei.tranning.le_cine.R
+import com.rikkei.tranning.le_cine.model.Genre
 import com.rikkei.tranning.le_cine.ui.listFragment.adapter.MovieListAdapter
 import com.rikkei.tranning.le_cine.ui.listFragment.adapter.MovieListAdapter.Companion.SPAN_COUNT_ONE
 import com.rikkei.tranning.le_cine.ui.listFragment.adapter.MovieListAdapter.Companion.SPAN_COUNT_THREE
@@ -29,6 +30,7 @@ class MovieListFragment : Fragment(), MoviesListView {
     private var callback: Callback? = null
     private lateinit var gridLayoutManager: GridLayoutManager
     private lateinit var movieListAdapter: MovieListAdapter
+    private lateinit var genresList: List<Genre>
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
@@ -52,6 +54,11 @@ class MovieListFragment : Fragment(), MoviesListView {
 
         initLayout()
         presenter.setView(this)
+        presenter.getGenres()
+    }
+
+    override fun getGenres(genres: List<Genre>) {
+        this.genresList = genres
     }
 
     private fun initLayout() {
@@ -110,6 +117,7 @@ class MovieListFragment : Fragment(), MoviesListView {
     }
 
     override fun showMovies(movies: ArrayList<Movie>?) {
+        movieListAdapter.listGenres = genresList
         movieListAdapter.addMovies(movies)
     }
 
@@ -134,6 +142,7 @@ class MovieListFragment : Fragment(), MoviesListView {
     }
 
     override fun onMovieClicked(movie: Movie) {
+        movie.genresString = movie.getGenres(genresList)
         callback?.onMovieClicked(movie)
     }
 

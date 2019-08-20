@@ -1,9 +1,10 @@
 package com.rikkei.tranning.le_cine.model
 
-import android.os.Parcel
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class Movie(
     val id: String,
     val overview: String?,
@@ -11,40 +12,12 @@ data class Movie(
     @SerializedName("poster_path") val posterPath: String?,
     @SerializedName("backdrop_path") val backdropPath: String?,
     val title: String,
-    @SerializedName("vote_average") val voteAverage: Double = 0.toDouble()
+    @SerializedName("genre_ids") val genreIds: List<String>?,
+    @SerializedName("vote_average") val voteAverage: Double = 0.toDouble(),
+    var genresString: String?
 ) : Parcelable {
 
-    @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
-    constructor(source: Parcel) : this(
-        source.readString(),
-        source.readString(),
-        source.readString(),
-        source.readString(),
-        source.readString(),
-        source.readString(),
-        source.readDouble()
-    )
-
-    override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeString(id)
-        parcel.writeString(overview)
-        parcel.writeString(releaseDate)
-        parcel.writeString(posterPath)
-        parcel.writeString(backdropPath)
-        parcel.writeString(title)
-        parcel.writeDouble(voteAverage)
-    }
-
-    override fun describeContents() = 0
-
-    companion object CREATOR : Parcelable.Creator<Movie> {
-        override fun createFromParcel(parcel: Parcel): Movie {
-            return Movie(parcel)
-        }
-
-        override fun newArray(size: Int): Array<Movie?> {
-            return arrayOfNulls(size)
-        }
+    companion object {
 
         fun newMovie(
             id: String,
@@ -53,9 +26,11 @@ data class Movie(
             posterPath: String,
             backdropPath: String,
             title: String,
-            voteAverage: Double
+            genreIds: List<String>,
+            voteAverage: Double,
+            genresString: String
         ): Movie {
-            return Movie(id, overview, releaseDate, posterPath, backdropPath, title, voteAverage)
+            return Movie(id, overview, releaseDate, posterPath, backdropPath, title, genreIds, voteAverage,genresString)
         }
     }
 
@@ -65,5 +40,19 @@ data class Movie(
 
     fun getBackDropPath(): String {
         return "http://image.tmdb.org/t/p/w780$backdropPath"
+    }
+
+    fun getGenres(genresList: List<Genre>?): String {
+        var result = ""
+        if (genreIds != null) {
+            for (genreId in genreIds) {
+                for (genre in genresList!!) {
+                    if (genre.id == genreId)
+                        result = result + genre.name + ", "
+                }
+            }
+        }
+        result = result.substring(0, result.length - 2)
+        return result
     }
 }

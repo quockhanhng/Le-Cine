@@ -2,11 +2,11 @@ package com.rikkei.tranning.le_cine.ui.listFragment.adapter
 
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.rikkei.tranning.le_cine.R
+import com.rikkei.tranning.le_cine.model.Genre
 import com.rikkei.tranning.le_cine.model.Movie
 import com.rikkei.tranning.le_cine.ui.listFragment.view.MoviesListView
 import com.squareup.picasso.Picasso
@@ -18,6 +18,7 @@ class MovieListAdapter(private var moviesView: MoviesListView, private var layou
     RecyclerView.Adapter<MovieListAdapter.ViewHolder>() {
 
     private var movies: ArrayList<Movie> = ArrayList()
+    var listGenres: List<Genre>? = null
 
     companion object {
         const val SPAN_COUNT_ONE = 1
@@ -59,10 +60,9 @@ class MovieListAdapter(private var moviesView: MoviesListView, private var layou
             this.movies = movies
             notifyDataSetChanged()
         }
-        Log.d("Log MovieListAdapter", this.movies.size.toString())
     }
 
-    fun clear(){
+    fun clear() {
         movies.clear()
         notifyDataSetChanged()
     }
@@ -88,6 +88,7 @@ class MovieListAdapter(private var moviesView: MoviesListView, private var layou
                     item_poster_span_1.setImageResource(R.drawable.default_poster)
 
                 item_year_span_1.text = movie.releaseDate
+                item_genres_span_1.text = movie.getGenres(listGenres)
                 item_rated_span_1.text = if (movie.voteAverage != 0.0) movie.voteAverage.toString() else "--"
             } else {
                 item_title_span_3.text = movie.title

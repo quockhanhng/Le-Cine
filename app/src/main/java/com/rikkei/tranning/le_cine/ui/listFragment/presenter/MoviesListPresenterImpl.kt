@@ -1,5 +1,6 @@
 package com.rikkei.tranning.le_cine.ui.listFragment.presenter
 
+import com.rikkei.tranning.le_cine.model.Genre
 import com.rikkei.tranning.le_cine.model.Movie
 import com.rikkei.tranning.le_cine.ui.listFragment.iterator.MoviesListIterator
 import com.rikkei.tranning.le_cine.ui.listFragment.view.MoviesListView
@@ -17,7 +18,23 @@ class MoviesListPresenterImpl(val iterator: MoviesListIterator) :
     private var loadedMovies = ArrayList<Movie>()
     private var fetchSubscription: Disposable? = null
     private var movieSearchSubscription: Disposable? = null
+    private var genreSubscription: Disposable? = null
     private var showingSearchResult = false
+
+    override fun getGenres() {
+        genreSubscription = iterator.getGenres()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(this::onGetGenresSuccess, this::onGetGenresFailed)
+    }
+
+    private fun onGetGenresSuccess(genres: List<Genre>) {
+        view?.getGenres(genres)
+    }
+
+    private fun onGetGenresFailed(e: Throwable) {
+        e.message?.let { view?.loadingFailed(it) }
+    }
 
     override fun firstPage() {
         currentPage = 1
@@ -51,7 +68,7 @@ class MoviesListPresenterImpl(val iterator: MoviesListIterator) :
 
     private fun displayMovieSearchResult(searchText: String) {
         showingSearchResult = true
-        showLoading()
+//        showLoading()
         movieSearchSubscription = iterator.searchMovie(searchText)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

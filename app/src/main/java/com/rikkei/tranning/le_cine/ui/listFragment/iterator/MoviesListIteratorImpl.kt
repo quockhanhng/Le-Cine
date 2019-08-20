@@ -2,6 +2,8 @@ package com.rikkei.tranning.le_cine.ui.listFragment.iterator
 
 import android.annotation.SuppressLint
 import com.rikkei.tranning.le_cine.api.TmdbWebService
+import com.rikkei.tranning.le_cine.model.Genre
+import com.rikkei.tranning.le_cine.model.GenreResponse
 import com.rikkei.tranning.le_cine.model.Movie
 import com.rikkei.tranning.le_cine.model.MovieResponse
 import com.rikkei.tranning.le_cine.ui.favourite.FavouriteIterator
@@ -47,5 +49,9 @@ class MoviesListIteratorImpl(
     override fun isMoviesLoadFromFavourites(): Boolean {
         val selectedOption = selectOptionStore.getSelectedOption()
         return selectedOption != SortType.FAVOURITE.value
+    }
+
+    override fun getGenres(): Observable<List<Genre>> {
+        return tmdbWebService.genres().map(GenreResponse::getGenresList)
     }
 }
