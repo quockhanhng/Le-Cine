@@ -53,8 +53,8 @@ class MovieListFragment : Fragment(), MoviesListView {
         super.onViewCreated(view, savedInstanceState)
 
         initLayout()
-        presenter.setView(this)
         presenter.getGenres()
+        presenter.setView(this)
     }
 
     override fun getGenres(genres: List<Genre>) {
