@@ -31,4 +31,7 @@ interface TmdbWebService {
 
     @GET("/3/movie/{movieId}/credits")
     fun casts(@Path("movieId") movieId: String): Observable<CastResponse>
+
+    @GET("3/person/{personId}")
+    fun person(@Path("personId") personId: String): Observable<Person>
 }

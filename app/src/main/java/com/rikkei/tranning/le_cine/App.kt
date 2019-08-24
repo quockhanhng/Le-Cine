@@ -1,14 +1,8 @@
 package com.rikkei.tranning.le_cine
 
 import android.app.Application
-import com.rikkei.tranning.le_cine.di.component.AppComponent
-import com.rikkei.tranning.le_cine.di.component.DaggerAppComponent
-import com.rikkei.tranning.le_cine.di.component.DetailComponent
-import com.rikkei.tranning.le_cine.di.component.ListComponent
-import com.rikkei.tranning.le_cine.di.module.AppModule
-import com.rikkei.tranning.le_cine.di.module.DetailModule
-import com.rikkei.tranning.le_cine.di.module.ListModule
-import com.rikkei.tranning.le_cine.di.module.NetworkModule
+import com.rikkei.tranning.le_cine.di.component.*
+import com.rikkei.tranning.le_cine.di.module.*
 import com.rikkei.tranning.le_cine.ui.favourite.FavouriteModule
 
 class App : Application() {
@@ -16,6 +10,7 @@ class App : Application() {
     private lateinit var appComponent: AppComponent
     private var listComponent: ListComponent? = null
     private var detailComponent: DetailComponent? = null
+    private var personDetailComponent: PersonDetailComponent? = null
 
     override fun onCreate() {
         super.onCreate()
@@ -49,5 +44,14 @@ class App : Application() {
 
     fun releaseDetailComponent() {
         detailComponent = null
+    }
+
+    fun createPersonDetailComponent(): PersonDetailComponent {
+        personDetailComponent = appComponent.plus(PersonDetailModule())
+        return personDetailComponent as PersonDetailComponent
+    }
+
+    fun releasePersonDetailComponent() {
+        personDetailComponent = null
     }
 }

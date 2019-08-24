@@ -12,4 +12,13 @@
     <string name="menu_item_search">Search</string>
     <string name="menu_item_share">Share</string>
     <string name="casts">Cast</string>
+    <string name="person_detail_bio">Biography</string>
+    <string name="movies">Movies</string>
+    <string name="person_detail_facts">Facts</string>
+    <string name="person_detail_born">Born</string>
+    <string name="person_detail_died">Died</string>
+    <string name="person_detail_birthplace">Birthplace</string>
+    <string name="person_detail_homepage">Homepage</string>
+    <string name="person_detail_also_known_as">Also Known As</string>
+    <string name="person_detail_age">Age</string>
 </resources>

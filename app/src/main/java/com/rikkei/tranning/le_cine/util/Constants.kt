@@ -7,3 +7,5 @@ const val TMDB_BASE_URL = "http://api.themoviedb.org/"
 const val MOVIE = "MOVIE"
 
 const val EMPTY = ""
+
+const val PERSON_ID = "PERSON_ID"

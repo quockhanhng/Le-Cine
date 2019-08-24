@@ -1,6 +1,7 @@
 package com.rikkei.tranning.le_cine.ui.detailFragment.view
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -35,6 +36,7 @@ class MovieDetailFragment : Fragment(), MovieDetailView, View.OnClickListener, M
     private var appBarExpanded = true
     private var collapsedMenu: Menu? = null
     private var trailerPath: String? = null
+    private var callback: Callback? = null
 
     companion object {
         fun getInstance(movie: Movie): MovieDetailFragment {
@@ -44,6 +46,12 @@ class MovieDetailFragment : Fragment(), MovieDetailView, View.OnClickListener, M
             movieDetailsFragment.arguments = args
             return movieDetailsFragment
         }
+    }
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+
+        callback = context as Callback
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -260,6 +268,7 @@ class MovieDetailFragment : Fragment(), MovieDetailView, View.OnClickListener, M
                 val castNameView = castContainer.findViewById<TextView>(R.id.cast_name)
                 val castCharacterView = castContainer.findViewById<TextView>(R.id.cast_character)
 
+                castThumbView.setTag(R.id.cast_tag, cast.id)
                 castThumbView.setOnClickListener(this)
 
                 if (cast.profilePath == null) {
@@ -296,7 +305,7 @@ class MovieDetailFragment : Fragment(), MovieDetailView, View.OnClickListener, M
             }
 
             R.id.cast_thumb -> {
-               //TODO Open profile
+                onCastClicked(v)
             }
 
             R.id.fabFavourite -> {
@@ -317,13 +326,28 @@ class MovieDetailFragment : Fragment(), MovieDetailView, View.OnClickListener, M
         else view.maxLines = 5
     }
 
+    private fun onCastClicked(v: View) {
+        val castId = v.getTag(R.id.cast_tag) as String
+        callback?.onPersonClicked(castId)
+    }
+
     private fun onFavouriteClicked() {
         presenter.onFavouriteClick(movie)
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+
+        callback = null
     }
 
     override fun onDestroy() {
         super.onDestroy()
 
         (activity?.application as App).releaseDetailComponent()
+    }
+
+    interface Callback {
+        fun onPersonClicked(id: String)
     }
 }
